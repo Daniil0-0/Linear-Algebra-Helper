@@ -1,0 +1,18 @@
+
+.cell{
+    all: unset;
+    border: 10px solid rgba(23, 12, 31, 0.2);
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+}
+.matrix{
+    border: 10px solid rgba(23, 12, 31, 0.2);
+    margin: 5px;
+}
+#matrices{
+    display: flex;
+}
+#controlPanel{
+    display: flex;
+}
