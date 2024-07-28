@@ -6,6 +6,7 @@ class Matrix {
         this.mStr = mStr;
     }
 
+
     getIndex() { return this.index; }
     getRows() { return this.rows; }
     getCols() { return this.cols; }
