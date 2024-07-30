@@ -1,4 +1,10 @@
-
+function handleInvalidInputWhileTyping(event) {
+    const value = event.target.value;
+    if (!isNumeric(value)) {
+        alert("Only numeric values are allowed.");
+        event.target.value = value.slice(0, -1);
+    }
+}
 class Matrix {
     constructor(rows, cols, index, mStr) {
         this.rows = rows;
@@ -41,7 +47,7 @@ class Matrix {
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.cols; j++) {
                 const value = values[i][j] !== undefined ? values[i][j] : '';
-                this.mStr += `<input id="cell${i}${j}${this.index}" oninput="handleInvalidInputWhileTyping(event)" class="cell" value="${value}">`;
+                this.mStr += `<input id="cell${i}${j}${this.index}" class="cell" value="${value}">`;
             }
             this.mStr += `<br>`;
         }
@@ -87,6 +93,7 @@ class Matrix {
     checkIfCanModMatrix(newRows, newCols) {
         return newCols > 0 && newCols <= 10 && newRows > 0 && newRows <= 10;
     }
+
     attachInputListeners() {
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.cols; j++) {
@@ -97,9 +104,6 @@ class Matrix {
     }
 }
 
-function main(){
-
-}
 const firstMatrix = document.getElementById('first');
 const secondMatrix = document.getElementById('second');
 const panel1 = document.getElementById('panel1');
@@ -143,10 +147,19 @@ multiplyButton.addEventListener('click', () => {
     } else {
         alert("The matrices cannot be multiplied due to incompatible dimensions.");
     }
-    const resMatrix = new Matrix(result[0].length, result.length, 3, '');
+    const resMatrix = new Matrix(result.length, result[0].length, 3, '');
     const resMatrixPrint = resMatrix.printMatrixWithValues(result);
     const resCont = document.getElementById('res-container');
     resCont.innerHTML = resMatrixPrint;
+    resMatrix.attachInputListeners();
+});
+
+const clearOut = document.getElementById('clear-input');
+clearOut.addEventListener('click', () => {
+    firstMatrix.innerHTML = matrix1.printMatrix();
+    secondMatrix.innerHTML = matrix2.printMatrix();
+    matrix1.attachInputListeners();
+    matrix2.attachInputListeners();
 });
 
 function isNumeric(value) {
@@ -179,6 +192,7 @@ function addButtonEvents(matrix) {
         } else {
             secondMatrix.innerHTML = matrix.addRow();
         }
+        matrix.attachInputListeners();
     });
 
     addColumnButton.addEventListener('click', () => {
@@ -187,6 +201,7 @@ function addButtonEvents(matrix) {
         } else {
             secondMatrix.innerHTML = matrix.addCol();
         }
+        matrix.attachInputListeners();
     });
 
     subRowButton.addEventListener('click', () => {
@@ -195,6 +210,7 @@ function addButtonEvents(matrix) {
         } else {
             secondMatrix.innerHTML = matrix.subRow();
         }
+        matrix.attachInputListeners();
     });
 
     subColumnButton.addEventListener('click', () => {
@@ -203,6 +219,7 @@ function addButtonEvents(matrix) {
         } else {
             secondMatrix.innerHTML = matrix.subCol();
         }
+        matrix.attachInputListeners();
     });
 }
 
@@ -244,10 +261,12 @@ function multiply(matrixA, matrixB) {
 
     return result;
 }
-function handleInvalidInputWhileTyping(event) {
-    const value = event.target.value;
-    if (!isNumeric(value)) {
-        alert("Only numeric values are allowed.");
-        event.target.value = value.slice(0, -1);
-    }
+
+function isSquareMatrix(matrix) {
+
+    return matrix[0].length === matrix.length;
+}
+
+function calcDeterminant(matrix) {
+    // Implementation of determinant calculation can go here
 }

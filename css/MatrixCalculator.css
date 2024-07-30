@@ -1,14 +1,36 @@
 
+/*
+https://colorhunt.co/palette/131842e68369ecceaefbf6e2
+ */
+@font-face {
+    font-family: BEWAL;
+    src: url("../resources/PlaywriteBEWAL-VariableFont_wght.ttf")
+}
+@font-face {
+    font-family: Lexend;
+    src: url("../resources/Lexend-VariableFont_wght.ttf")
+}
+*{
+    font-family: BEWAL, serif;
+}
 .cell{
     all: unset;
-    border: 10px solid rgba(23, 12, 31, 0.2);
+    border: 5px solid #131842;
+    border-radius: 10px;
     width: 30px;
-    height: 30px;
+    height: 20px;
     margin: 5px;
+    font-family: Lexend,sans-serif;
+    font-size:20px;
 }
 .matrix{
-    border: 10px solid rgba(23, 12, 31, 0.2);
-    margin: 5px;
+    border: 10px solid #131842;
+    padding: 10px;
+    border-radius: 15px;
+    width: 500px;
+    height: 480px;
+    margin: 15px;
+
 }
 #matrices{
     display: flex;
@@ -16,4 +38,67 @@
 }
 #controlPanel{
     display: flex;
+    margin: 50px;
+
+
+}
+#controlPanel *{
+    margin: 20px;
+    background-color: #E68369;
+}
+
+#panel2{
+    border: 10px solid #131842;
+    margin-left: 280px;
+}
+#panel1{
+    border: 10px solid #131842;
+    margin-left: 80px;
+}
+
+#buttonsPanel{
+    margin: 10px;
+    margin-left: 200px;
+}
+#buttonsPanel *{
+    margin: 20px;
+}
+
+button {
+    padding: 15px 25px;
+    border: unset;
+    border-radius: 15px;
+    color: #212121;
+    z-index: 1;
+    background: #e8e8e8;
+    position: relative;
+    font-weight: 1000;
+    font-size: 17px;
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    transition: all 250ms;
+    overflow: hidden;
+}
+
+button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    border-radius: 15px;
+    background-color: #212121;
+    z-index: -1;
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    transition: all 250ms
+}
+
+button:hover {
+    color: #e8e8e8;
+}
+
+button:hover::before {
+    width: 100%;
 }
