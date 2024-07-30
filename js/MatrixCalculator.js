@@ -1,3 +1,4 @@
+
 class Matrix {
     constructor(rows, cols, index, mStr) {
         this.rows = rows;
@@ -5,7 +6,6 @@ class Matrix {
         this.index = index;
         this.mStr = mStr;
     }
-
 
     getIndex() { return this.index; }
     getRows() { return this.rows; }
@@ -35,18 +35,18 @@ class Matrix {
         }
         return this.mStr;
     }
+
     printMatrixWithValues(values) {
         this.mStr = '';
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.cols; j++) {
                 const value = values[i][j] !== undefined ? values[i][j] : '';
-                this.mStr += `<input id="cell${i}${j}${this.index}" class="cell" value="${value}">`;
+                this.mStr += `<input id="cell${i}${j}${this.index}" oninput="handleInvalidInputWhileTyping(event)" class="cell" value="${value}">`;
             }
             this.mStr += `<br>`;
         }
         return this.mStr;
     }
-
 
     addRow() {
         if (this.checkIfCanModMatrix(this.rows + 1, this.cols)) {
@@ -87,8 +87,19 @@ class Matrix {
     checkIfCanModMatrix(newRows, newCols) {
         return newCols > 0 && newCols <= 10 && newRows > 0 && newRows <= 10;
     }
+    attachInputListeners() {
+        for (let i = 0; i < this.rows; i++) {
+            for (let j = 0; j < this.cols; j++) {
+                const cell = document.getElementById(`cell${i}${j}${this.index}`);
+                cell.addEventListener('input', handleInvalidInputWhileTyping);
+            }
+        }
+    }
 }
 
+function main(){
+
+}
 const firstMatrix = document.getElementById('first');
 const secondMatrix = document.getElementById('second');
 const panel1 = document.getElementById('panel1');
@@ -102,6 +113,9 @@ firstMatrix.innerHTML = matrix1.printMatrix();
 secondMatrix.innerHTML = matrix2.printMatrix();
 panel1.innerHTML = printControlPanel(1);
 panel2.innerHTML = printControlPanel(2);
+
+matrix1.attachInputListeners();
+matrix2.attachInputListeners();
 
 addButtonEvents(matrix1);
 addButtonEvents(matrix2);
@@ -129,7 +143,7 @@ multiplyButton.addEventListener('click', () => {
     } else {
         alert("The matrices cannot be multiplied due to incompatible dimensions.");
     }
-    const resMatrix = new Matrix(result[0].length,result.length,3,'');
+    const resMatrix = new Matrix(result[0].length, result.length, 3, '');
     const resMatrixPrint = resMatrix.printMatrixWithValues(result);
     const resCont = document.getElementById('res-container');
     resCont.innerHTML = resMatrixPrint;
@@ -229,4 +243,11 @@ function multiply(matrixA, matrixB) {
     }
 
     return result;
+}
+function handleInvalidInputWhileTyping(event) {
+    const value = event.target.value;
+    if (!isNumeric(value)) {
+        alert("Only numeric values are allowed.");
+        event.target.value = value.slice(0, -1);
+    }
 }
